@@ -35,7 +35,7 @@ public class FuncionariosDao {
         try {
 
             connection = ConnectionUtil.getConnection();
-            preparedStatement = connection.prepareCall(CREATE_FUNCIONARIO);
+            preparedStatement = connection.prepareCall(CREATE_FUNCIONARIO); //preparar consulta y envia por parametro
             preparedStatement.setString(1, funcionarios.getTipoId());
             preparedStatement.setString(2, funcionarios.getIdentificacion());
             preparedStatement.setString(3, funcionarios.getNombre());
@@ -45,7 +45,7 @@ public class FuncionariosDao {
             preparedStatement.setString(7, funcionarios.getDireccion());
             preparedStatement.setString(8, funcionarios.getTelefono());
             preparedStatement.setString(9, funcionarios.getFechaNac());
-            preparedStatement.executeLargeUpdate();
+            preparedStatement.executeUpdate(); //?
 
         } finally {
             if (connection != null) {
@@ -66,7 +66,7 @@ public class FuncionariosDao {
 
         try {
             connection = ConnectionUtil.getConnection();
-            preparedStatement = connection.prepareStatement(GET_FUNCIONARIOS);
+            preparedStatement = connection.prepareStatement(GET_FUNCIONARIOS); //solicita consulta
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Funcionarios funcionario = new Funcionarios(); //sin s
@@ -186,7 +186,7 @@ public class FuncionariosDao {
                 connection.close();
             }
             if (preparedStatement != null) {
-                preparedStatement.close();
+                preparedStatement.close(); 
             }
         }
     }
