@@ -71,14 +71,15 @@ public class FuncionariosDao {
             while (resultSet.next()) {
                 Funcionarios funcionario = new Funcionarios(); //sin s
                 funcionario.setId(resultSet.getInt("id"));
+                funcionario.setTipoId("tipoId");
                 funcionario.setIdentificacion("identificacion");
-                funcionario.setNombre("Nombre");
-                funcionario.setApellido("Apellido");
-                funcionario.setEstadoCivil("Esdado Civil");
-                funcionario.setSexo("Sexo");
-                funcionario.setDireccion("Direccion");
-                funcionario.setTelefono("Telefono");
-                funcionario.setFechaNac("Fecha de Nacimiento");
+                funcionario.setNombre("nombre");
+                funcionario.setApellido("apellido");
+                funcionario.setEstadoCivil("esdadoCivil");
+                funcionario.setSexo("sexo");
+                funcionario.setDireccion("direccion");
+                funcionario.setTelefono("telefono");
+                funcionario.setFechaNac("fechaNac");
                 funcionarios.add(funcionario);
             }
             return funcionarios;

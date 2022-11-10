@@ -1,24 +1,71 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.crudfuncionarios.presentacion;
 
+import com.mycompany.crudfuncionarios.controller.FuncionariosController;
 import com.mycompany.crudfuncionarios.dominio.Funcionarios;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Jess
- */
 public class Main2 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main2
-     */
+    private final FuncionariosController funcionariosController;
+    private static final String[] COLUMNS = {"ID", "Tipo Id", "Identificacion", "Nombre", "Apellido", "Estado Civil", "Sexo", "Direccion", "Telefono", "Fecha de Nacimiento"};
+    private static final String SELECCIONE = "--Seleccione--";
+
     public Main2() {
         initComponents();
+        txtFuncionarioId.setEditable(false);
+        funcionariosController = new FuncionariosController();
+        listFuncionarios();
     }
+
+    private void listFuncionarios() {
+        cbxFuncionarios.removeAllItems();
+
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        for (String COLUMN : COLUMNS) {
+            defaultTableModel.addColumn(COLUMN);
+        }
+        tblFuncionarios.setModel(defaultTableModel);
+
+        try {
+            List<Funcionarios> funcionarios2 = funcionariosController.obtenerFuncionarios();
+            if (funcionarios2.isEmpty()) {
+                return;
+            }
+            defaultTableModel.setRowCount(funcionarios2.size());
+            int row = 0;
+            for (Funcionarios funcionarios: funcionarios2){
+            
+                defaultTableModel.setValueAt(funcionarios.getId(), row, 0);
+                defaultTableModel.setValueAt(funcionarios.getTipoId(), row, 1);
+                defaultTableModel.setValueAt(funcionarios.getIdentificacion(), row, 2);
+                defaultTableModel.setValueAt(funcionarios.getNombre(), row, 3);
+                defaultTableModel.setValueAt(funcionarios.getApellido(), row, 4);
+                defaultTableModel.setValueAt(funcionarios.getEstadoCivil(), row, 5);
+                defaultTableModel.setValueAt(funcionarios.getSexo(), row, 6);
+                defaultTableModel.setValueAt(funcionarios.getDireccion(), row, 7);
+                defaultTableModel.setValueAt(funcionarios.getTelefono(), row, 8);
+                defaultTableModel.setValueAt(funcionarios.getFechaNac(), row, 9);
+                row++;
+                cbxFuncionarios.addItem(funcionarios);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    private void addListener(){
+    
+    
+    }
+
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +99,8 @@ public class Main2 extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         txtFechaNac = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblFuncionarios = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jPEdit = new javax.swing.JPanel();
         lblFuncionarios = new javax.swing.JLabel();
@@ -78,8 +127,6 @@ public class Main2 extends javax.swing.JFrame {
         txtFechaNacEdit = new javax.swing.JTextField();
         BtnActualizar = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblFuncionarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -115,6 +162,16 @@ public class Main2 extends javax.swing.JFrame {
 
         btnGuardar.setText("Guardar");
 
+        tblFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tblFuncionarios);
+
         javax.swing.GroupLayout jPFuncionario1Layout = new javax.swing.GroupLayout(jPFuncionario1);
         jPFuncionario1.setLayout(jPFuncionario1Layout);
         jPFuncionario1Layout.setHorizontalGroup(
@@ -144,7 +201,11 @@ public class Main2 extends javax.swing.JFrame {
                     .addComponent(txtFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
                 .addGap(49, 49, 49)
                 .addComponent(btnGuardar)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPFuncionario1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPFuncionario1Layout.setVerticalGroup(
             jPFuncionario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +222,7 @@ public class Main2 extends javax.swing.JFrame {
                 .addGroup(jPFuncionario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPFuncionario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblApellido)
                     .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,24 +247,25 @@ public class Main2 extends javax.swing.JFrame {
                     .addComponent(lblFechaNac)
                     .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar))
-                .addContainerGap(445, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(229, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPFuncionarioLayout = new javax.swing.GroupLayout(jPFuncionario);
         jPFuncionario.setLayout(jPFuncionarioLayout);
         jPFuncionarioLayout.setHorizontalGroup(
             jPFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPFuncionarioLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPFuncionarioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPFuncionario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(jPFuncionario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPFuncionarioLayout.setVerticalGroup(
             jPFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPFuncionarioLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPFuncionario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTPanels.addTab("Crear Funcionario", jPFuncionario);
@@ -359,24 +421,12 @@ public class Main2 extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(547, Short.MAX_VALUE))
         );
 
         jTPanels.addTab("Editar Funcionario", jPanel1);
 
-        getContentPane().add(jTPanels, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 730, 430));
-
-        tblFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane3.setViewportView(tblFuncionarios);
-
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 700, 180));
+        getContentPane().add(jTPanels, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 730, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -434,7 +484,7 @@ public class Main2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPFuncionario;
     private javax.swing.JPanel jPFuncionario1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTPanels;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblApellidoEdit;
