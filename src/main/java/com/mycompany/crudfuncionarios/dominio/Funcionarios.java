@@ -4,11 +4,11 @@ package com.mycompany.crudfuncionarios.dominio;
 public class Funcionarios {
     
     private int id;
-    private String tipoId;
+    private int tipoId;
     private String identificacion;
     private String nombre;
     private String apellido;
-    private String estadoCivil;
+    private int estadoCivil;
     private String sexo;
     private String direccion;
     private String telefono;
@@ -22,11 +22,11 @@ public class Funcionarios {
         this.id = id;
     }
 
-    public String getTipoId() {
+    public int getTipoId() {
         return tipoId;
     }
 
-    public void setTipoId(String tipoId) {
+    public void setTipoId(int tipoId) {
         this.tipoId = tipoId;
     }
 
@@ -54,11 +54,11 @@ public class Funcionarios {
         this.apellido = apellido;
     }
 
-    public String getEstadoCivil() {
+    public int getEstadoCivil() {
         return estadoCivil;
     }
 
-    public void setEstadoCivil(String estadoCivil) {
+    public void setEstadoCivil(int estadoCivil) {
         this.estadoCivil = estadoCivil;
     }
 

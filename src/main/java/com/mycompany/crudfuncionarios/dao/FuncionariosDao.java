@@ -36,11 +36,11 @@ public class FuncionariosDao {
 
             connection = ConnectionUtil.getConnection();
             preparedStatement = connection.prepareCall(CREATE_FUNCIONARIO); //preparar consulta y envia por parametro
-            preparedStatement.setString(1, funcionarios.getTipoId());
+            preparedStatement.setInt(1, funcionarios.getTipoId());
             preparedStatement.setString(2, funcionarios.getIdentificacion());
             preparedStatement.setString(3, funcionarios.getNombre());
             preparedStatement.setString(4, funcionarios.getApellido());
-            preparedStatement.setString(5, funcionarios.getEstadoCivil());
+            preparedStatement.setInt(5, funcionarios.getEstadoCivil());
             preparedStatement.setString(6, funcionarios.getSexo());
             preparedStatement.setString(7, funcionarios.getDireccion());
             preparedStatement.setString(8, funcionarios.getTelefono());
@@ -71,11 +71,11 @@ public class FuncionariosDao {
             while (resultSet.next()) {
                 Funcionarios funcionario = new Funcionarios(); //sin s
                 funcionario.setId(resultSet.getInt("id"));
-                funcionario.setTipoId("tipoId");
+                funcionario.setTipoId(0);
                 funcionario.setIdentificacion("identificacion");
                 funcionario.setNombre("nombre");
                 funcionario.setApellido("apellido");
-                funcionario.setEstadoCivil("esdadoCivil");
+                funcionario.setEstadoCivil(0);
                 funcionario.setSexo("sexo");
                 funcionario.setDireccion("direccion");
                 funcionario.setTelefono("telefono");
@@ -118,7 +118,7 @@ public class FuncionariosDao {
                 funcionario.setIdentificacion("identificacion");
                 funcionario.setNombre("Nombre");
                 funcionario.setApellido("Apellido");
-                funcionario.setEstadoCivil("Esdado Civil");
+                funcionario.setEstadoCivil(id);
                 funcionario.setSexo("Sexo");
                 funcionario.setDireccion("Direccion");
                 funcionario.setTelefono("Telefono");
@@ -149,11 +149,11 @@ public class FuncionariosDao {
 
             connection = ConnectionUtil.getConnection();
             preparedStatement = connection.prepareCall(UPDATE_FUNCIONARIO);
-            preparedStatement.setString(1, funcionarios.getTipoId());
+            preparedStatement.setInt(1, funcionarios.getTipoId());
             preparedStatement.setString(2, funcionarios.getIdentificacion());
             preparedStatement.setString(3, funcionarios.getNombre());
             preparedStatement.setString(4, funcionarios.getApellido());
-            preparedStatement.setString(5, funcionarios.getEstadoCivil());
+            preparedStatement.setInt(5, funcionarios.getEstadoCivil());
             preparedStatement.setString(6, funcionarios.getSexo());
             preparedStatement.setString(7, funcionarios.getDireccion());
             preparedStatement.setString(8, funcionarios.getTelefono());

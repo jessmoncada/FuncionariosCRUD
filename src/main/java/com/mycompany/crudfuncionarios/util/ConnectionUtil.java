@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class ConnectionUtil {
     
     //Variables constantes
-    private static final String URL = "jdbc:postgresql://localhost:5432/funcionarios_dt";
+    private static final String URL = "jdbc:postgresql://localhost:5432/Funcionarios";
     private static final String USER = "postgres";
     private static final String PASSWORD= "moncada20";
     
